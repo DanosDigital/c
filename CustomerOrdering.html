@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hotel Menu Ordering</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    header {
+      background-color: #2c3e50;
+      color: white;
+      padding: 15px 0;
+      text-align: center;
+      margin-bottom: 20px;
+      border-radius: 5px;
+    }
+
+    .table-select {
+      margin-bottom: 20px;
+      padding: 15px;
+      background-color: #ecf0f1;
+      border-radius: 5px;
+    }
+
+    select {
+      padding: 10px;
+      width: 100%;
+      font-size: 16px;
+    }
+
+    .menu-category {
+      margin-bottom: 30px;
+    }
+
+    .menu-items {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 15px;
+    }
+
+    .menu-item {
+      background-color: white;
+      border-radius: 5px;
+      padding: 15px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .menu-item h3 {
+      margin-top: 0;
+      color: #2c3e50;
+    }
+
+    .price {
+      font-weight: bold;
+      color: #e74c3c;
+      margin: 10px 0;
+    }
+
+    .description {
+      color: #7f8c8d;
+      margin-bottom: 15px;
+      font-size: 14px;
+    }
+
+    .add-btn {
+      background-color: #27ae60;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 3px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .order-summary {
+      background-color: white;
+      padding: 20px;
+      border-radius: 5px;
+      margin-top: 30px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      bottom: 20px;
+    }
+
+    .order-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .total {
+      font-weight: bold;
+      font-size: 18px;
+      text-align: right;
+      margin-top: 15px;
+    }
+
+    .submit-btn {
+      background-color: #3498db;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 16px;
+      width: 100%;
+      margin-top: 15px;
+    }
+
+    .quantity-control {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .quantity-btn {
+      background-color: #bdc3c7;
+      border: none;
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    @media (max-width: 600px) {
+      .menu-items {
+        grid-template-columns: 1fr;
+      }
+
+      .container {
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <h1>Hotel Restaurant Menu</h1>
+    </header>
+
+    <div class="table-select">
+      <h2>Select Your Table</h2>
+      <select id="table-select" required>
+        <option value="">-- Please select your table --</option>
+        <option value="1">Table 1</option>
+        <option value="2">Table 2</option>
+        <option value="3">Table 3</option>
+        <option value="4">Table 4</option>
+        <option value="5">Table 5</option>
+        <option value="6">Table 6</option>
+        <option value="7">Table 7</option>
+        <option value="8">Table 8</option>
+      </select>
+    </div>
+
+    <div class="menu-category">
+      <h2>Appetizers</h2>
+      <div class="menu-items">
+        <div class="menu-item">
+          <h3>Bruschetta</h3>
+          <div class="price">$8.99</div>
+          <div class="description">Toasted bread topped with tomatoes, garlic, and fresh basil.</div>
+          <button class="add-btn" onclick="addToOrder('Bruschetta', 8.99)">Add to Order</button>
+        </div>
+        <div class="menu-item">
+          <h3>Caesar Salad</h3>
+          <div class="price">$10.99</div>
+          <div class="description">Romaine lettuce, croutons, parmesan cheese with Caesar dressing.</div>
+          <button class="add-btn" onclick="addToOrder('Caesar Salad', 10.99)">Add to Order</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="menu-category">
+      <h2>Main Courses</h2>
+      <div class="menu-items">
+        <div class="menu-item">
+          <h3>Grilled Salmon</h3>
+          <div class="price">$22.99</div>
+          <div class="description">Fresh salmon fillet grilled to perfection with lemon butter sauce.</div>
+          <button class="add-btn" onclick="addToOrder('Grilled Salmon', 22.99)">Add to Order</button>
+        </div>
+        <div class="menu-item">
+          <h3>Filet Mignon</h3>
+          <div class="price">$29.99</div>
+          <div class="description">8oz tender beef filet with roasted vegetables and mashed potatoes.</div>
+          <button class="add-btn" onclick="addToOrder('Filet Mignon', 29.99)">Add to Order</button>
+        </div>
+        <div class="menu-item">
+          <h3>Chicken Parmesan</h3>
+          <div class="price">$18.99</div>
+          <div class="description">Breaded chicken breast topped with marinara and mozzarella cheese.</div>
+          <button class="add-btn" onclick="addToOrder('Chicken Parmesan', 18.99)">Add to Order</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="menu-category">
+      <h2>Desserts</h2>
+      <div class="menu-items">
+        <div class="menu-item">
+          <h3>Chocolate Lava Cake</h3>
+          <div class="price">$7.99</div>
+          <div class="description">Warm chocolate cake with a molten center, served with vanilla ice cream.</div>
+          <button class="add-btn" onclick="addToOrder('Chocolate Lava Cake', 7.99)">Add to Order</button>
+        </div>
+        <div class="menu-item">
+          <h3>Tiramisu</h3>
+          <div class="price">$6.99</div>
+          <div class="description">Classic Italian dessert with layers of coffee-soaked ladyfingers and mascarpone
+            cream.</div>
+          <button class="add-btn" onclick="addToOrder('Tiramisu', 6.99)">Add to Order</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="order-summary">
+      <h2>Your Order</h2>
+      <div id="order-items">
+        <p>No items added yet.</p>
+      </div>
+      <div id="order-total" class="total">Total: $0.00</div>
+      <button id="submit-order" class="submit-btn" onclick="submitOrder()">Submit Order to Kitchen</button>
+    </div>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
+
+  <script>
+    // Initialize Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyAqAyhiO8psA_We1bTr_sB9Biv3zBTJauk",
+      authDomain: "danosdigital-6d552.firebaseapp.com",
+      projectId: "danosdigital-6d552",
+      storageBucket: "danosdigital-6d552.firebasestorage.app",
+      messagingSenderId: "286747062903",
+      appId: "1:286747062903:web:c16f71d9f3d9cf0ae88c72",
+      measurementId: "G-YCVHXLC7NX"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+
+    let currentOrder = {
+      tableId: '',
+      items: [],
+      total: 0
+    };
+
+    function addToOrder(name, price) {
+      const tableSelect = document.getElementById('table-select');
+      if (!tableSelect.value) {
+        alert('Please select your table first');
+        return;
+      }
+
+      currentOrder.tableId = tableSelect.value;
+
+      // Check if item already exists
+      const existingItem = currentOrder.items.find(item => item.name === name);
+      if (existingItem) {
+        existingItem.quantity += 1;
+        existingItem.total = existingItem.quantity * existingItem.price;
+      } else {
+        currentOrder.items.push({
+          name: name,
+          price: price,
+          quantity: 1,
+          total: price
+        });
+      }
+
+      updateOrderDisplay();
+    }
+
+    function updateOrderDisplay() {
+      const orderItemsEl = document.getElementById('order-items');
+      const orderTotalEl = document.getElementById('order-total');
+
+      if (currentOrder.items.length === 0) {
+        orderItemsEl.innerHTML = '<p>No items added yet.</p>';
+        orderTotalEl.textContent = 'Total: $0.00';
+        currentOrder.total = 0;
+        return;
+      }
+
+      let itemsHtml = '';
+      let total = 0;
+
+      currentOrder.items.forEach(item => {
+        itemsHtml += `
+                    <div class="order-item">
+                        <span>${item.name} (x${item.quantity})</span>
+                        <span>$${item.total.toFixed(2)}</span>
+                    </div>
+                `;
+        total += item.total;
+      });
+
+      orderItemsEl.innerHTML = itemsHtml;
+      orderTotalEl.textContent = `Total: $${total.toFixed(2)}`;
+      currentOrder.total = total;
+    }
+
+    function submitOrder() {
+      if (!currentOrder.tableId) {
+        alert('Please select your table');
+        return;
+      }
+
+      if (currentOrder.items.length === 0) {
+        alert('Please add items to your order');
+        return;
+      }
+
+      const submitBtn = document.getElementById('submit-order');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending Order...';
+
+      const newOrderRef = database.ref('orders').push();
+      newOrderRef.set({
+        tableId: currentOrder.tableId,
+        items: currentOrder.items,
+        total: currentOrder.total,
+        timestamp: firebase.database.ServerValue.TIMESTAMP,
+        status: 'new'
+      })
+        .then(() => {
+          alert('Order sent to kitchen successfully!');
+          currentOrder = {
+            tableId: currentOrder.tableId,
+            items: [],
+            total: 0
+          };
+          updateOrderDisplay();
+        })
+        .catch(error => {
+          alert('Error sending order: ' + error.message);
+        })
+        .finally(() => {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Submit Order to Kitchen';
+        });
+    }
+  </script>
+</body>
+
+</html>
